@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSec Elite | TCOER Cybersecurity Student Association</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #000;
+            color: #0f0;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
+        }
+
+        .hero-shape {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1));
+        }
+
+        .glitch {
+            position: relative;
+            font-size: 5rem;
+            font-weight: bold;
+            animation: glitch 2s linear infinite;
+            text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 15px #0f0, 0 0 20px #0f0;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0, 0);
+            }
+            20% {
+                transform: translate(-5px, 5px);
+            }
+            40% {
+                transform: translate(-10px, -10px);
+            }
+            60% {
+                transform: translate(10px, 10px);
+            }
+            80% {
+                transform: translate(5px, -5px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .section {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hover-effect:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        .glitch-text {
+            position: relative;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #0f0;
+        }
+    </style>
+</head>
+<body class="bg-black text-green-400">
+
+    <canvas class="matrix-bg"></canvas>
+
+    <!-- Navbar -->
+    <nav class="bg-black bg-opacity-80 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-green-400 font-bold text-xl">CyberSec Elite</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="text-green-300 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#about" class="text-green-300 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="#events" class="text-green-300 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Operations</a>
+                        <a href="#team" class="text-green-300 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Operatives</a>
+                        <a href="#blog" class="text-green-300 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Intel</a>
+                        <a href="#contact" class="text-green-300 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section flex flex-col items-center justify-center">
+        <div class="hero-shape"></div>
+        <div class="container mx-auto px-4 hero-content text-center">
+            <h1 class="glitch glitch-text" title="TCOER CyberSec Elite">TCOER CyberSec Elite</h1>
+            <p class="text-xl mb-8">Infiltrating the digital realm, fortifying defenses, and hacking for good. Join the elite force of cyber guardians.</p>
+            <a href="#" class="bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded mr-4 transition-transform transform hover:scale-105">Infiltrate Now</a>
+            <a href="#about" class="border border-green-500 hover:bg-green-500 hover:text-black text-green-500 font-bold py-2 px-4 rounded transition-transform transform hover:scale-105">Decrypt More</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-8">Our Directive</h2>
+            <div class="flex flex-wrap justify-center">
+                <div class="w-full md:w-1/2 px-4 mb-8">
+                    <p class="text-lg mb-4">We are a clandestine network of cyber operatives, united in our mission to secure the digital frontier. Our objective: to cultivate an elite force of information security specialists.</p>
+                    <p class="text-lg">Through covert operations, simulated cyber warfare, and intelligence gathering, we equip our operatives with the skills to navigate the treacherous waters of the digital underworld and emerge as formidable guardians of cyberspace.</p>
+                </div>
+                <div class="w-full md:w-1/2 px-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-800 p-4 rounded-lg hover:shadow-xl transition-shadow">
+                            <h4 class="text-2xl font-bold mb-2">50+</h4>
+                            <p>Active Operatives</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg hover:shadow-xl transition-shadow">
+                            <h4 class="text-2xl font-bold mb-2">10</h4>
+                            <p>Annual Ops</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg hover:shadow-xl transition-shadow">
+                            <h4 class="text-2xl font-bold mb-2">5</h4>
+                            <p>Breaches Prevented</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded-lg hover:shadow-xl transition-shadow">
+                            <h4 class="text-2xl font-bold mb-2">20+</h4>
+                            <p>Covert Training Ops</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-8 text-center">Upcoming Operations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-black p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+                    <h3 class="text-xl font-bold mb-2">Black Hat Infiltration Simulation</h3>
+                    <p class="mb-4">Engage in a high-stakes ethical hacking operation to test and fortify critical infrastructure.</p>
+                    <p class="mb-4">June 15, 2024</p>
+                    <a href="#" class="bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded transition-transform transform hover:scale-105">Enlist</a>
+                </div>
+                <div class="bg-black p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+                    <h3 class="text-xl font-bold mb-2">Advanced Cryptography Workshop</h3>
+                    <p class="mb-4">Delve into the world of cryptographic algorithms and secure communications.</p>
+                    <p class="mb-4">July 20, 2024</p>
+                    <a href="#" class="bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded transition-transform transform hover:scale-105">Register</a>
+                </div>
+                <div class="bg-black p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+                    <h3 class="text-xl font-bold mb-2">Cyber Defense Tactics Seminar</h3>
+                    <p class="mb-4">Learn cutting-edge strategies to protect networks and systems from cyber threats.</p>
+                    <p class="mb-4">August 30, 2024</p>
+                    <a href="#" class="bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded transition-transform transform hover:scale-105">Join</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-8">Meet the Operatives</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+                    <img src="https://via.placeholder.com/150" alt="Operative" class="rounded-full mx-auto mb-4">
+                    <h3 class="text-xl font-bold mb-2">John Doe</h3>
+                    <p>Lead Strategist</p>
+                    <p class="mt-4">John is a seasoned strategist with expertise in cyber warfare and defense tactics. His leadership has been instrumental in several successful operations.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+                    <img src="https://via.placeholder.com/150" alt="Operative" class="rounded-full mx-auto mb-4">
+                    <h3 class="text-xl font-bold mb-2">Jane Smith</h3>
+                    <p>Cryptography Expert</p>
+                    <p class="mt-4">Jane specializes in advanced cryptography and secure communications, providing vital skills for our cyber defense operations.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+                    <img src="https://via.placeholder.com/150" alt="Operative" class="rounded-full mx-auto mb-4">
+                    <h3 class="text-xl font-bold mb-2">Alex Brown</h3>
+                    <p>Network Security Analyst</p>
+                    <p class="mt-4">Alex's expertise in network security and threat analysis ensures our systems remain impenetrable to external attacks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-8 text-center">Latest Intel</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-black p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+                    <h3 class="text-xl font-bold mb-2">How to Secure Your Network</h3>
+                    <p class="mb-4">Tips and best practices to safeguard your network from cyber threats.</p>
+                    <a href="#" class="bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded transition-transform transform hover:scale-105">Read More</a>
+                </div>
+                <div class="bg-black p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+                    <h3 class="text-xl font-bold mb-2">Understanding Cyber Threats</h3>
+                    <p class="mb-4">An overview of various cyber threats and how to protect against them.</p>
+                    <a href="#" class="bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded transition-transform transform hover:scale-105">Read More</a>
+                </div>
+                <div class="bg-black p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
+                    <h3 class="text-xl font-bold mb-2">The Future of Cybersecurity</h3>
+                    <p class="mb-4">Insights into emerging trends and technologies in the cybersecurity landscape.</p>
+                    <a href="#" class="bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded transition-transform transform hover:scale-105">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-8 text-center">Join Us</h2>
+            <div class="flex justify-center">
+                <div class="w-full max-w-lg">
+                    <!-- Join Form Modal -->
+                    <div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="joinModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="joinModalLabel">Join the CyberSec Elite</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="joinForm">
+                                        <div class="form-group">
+                                            <label for="joinName">Name</label>
+                                            <input type="text" class="form-control" id="joinName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="joinEmail">Email</label>
+                                            <input type="email" class="form-control" id="joinEmail" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="joinYear">Year</label>
+                                            <input type="text" class="form-control" id="joinYear" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="joinMessage">Message</label>
+                                            <textarea class="form-control" id="joinMessage" rows="3" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="bg-green-500 hover:bg-green-600 text-black font-bold py-2 px-4 rounded" data-toggle="modal" data-target="#joinModal">
+                        Join Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.querySelector('.matrix-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'アァイゥエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array.from({ length: columns }).fill(1);
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0F0';
+            ctx.font = `${fontSize}px 'Share Tech Mono'`;
+
+            drops.forEach((drop, index) => {
+                const text = katakana[Math.floor(Math.random() * katakana.length)];
+                ctx.fillText(text, index * fontSize, drop * fontSize);
+                drops[index] = drop > canvas.height || Math.random() > 0.975 ? 0 : drop + fontSize;
+            });
+        }
+
+        setInterval(draw, 33);
+
+        // Modal Form Submission
+        $('#joinForm').on('submit', async function(e) {
+            e.preventDefault();
+
+            const name = $('#joinName').val();
+            const email = $('#joinEmail').val();
+            const year = $('#joinYear').val();
+            const message = $('#joinMessage').val();
+
+            try {
+                const response = await fetch('/join', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, year, message })
+                });
+
+                if (response.ok) {
+                    alert('Form submitted successfully!');
+                    $('#joinModal').modal('hide');
+                    $('#joinForm')[0].reset();
+                } else {
+                    alert('Failed to submit the form.');
+                }
+            } catch (error) {
+                alert('An error occurred. Please try again later.');
+            }
+        });
+
+        // GSAP Animations
+        gsap.from('.hero-content', { duration: 1, y: 50, opacity: 0, stagger: 0.3 });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
