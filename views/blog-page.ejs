@@ -91,10 +91,24 @@
   }
 
   .footer {
-margin-top: 7rem;
+    margin-top: 7rem;
     background-color: #1a252f;
     color: var(--light-color);
   }
+
+  .sponsor-logo {
+    max-width: 150px;
+    height: auto;
+    filter: grayscale(100%);
+    transition: filter 0.3s;
+  }
+
+  .sponsor-logo:hover {
+    filter: grayscale(0%);
+  }
+
+
+
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -152,6 +166,7 @@ margin-top: 7rem;
     const errorElement = document.getElementById("error-message");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
+    const spinnerOverlay = document.getElementById("spinner"); // Get the spinner overlay
     let allPosts = [];
     let filteredPosts = [];
     let currentPage = 1;
