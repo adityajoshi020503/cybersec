@@ -10,7 +10,8 @@ require("dotenv").config();
 const mongoURI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/cybersec";
 
-  mongoose.connect(mongoURI)
+mongoose
+  .connect(mongoURI)
   .then(() => {
     // Check if the connection is to a cloud MongoDB or local MongoDB
     if (process.env.MONGODB_URI) {
