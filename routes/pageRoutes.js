@@ -4,56 +4,57 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 const request = require("request");
 const xml2js = require("xml2js");
-const mongoose = require('mongoose');
-// const { MongoClient, ServerApiVersion } = require('mongodb');
-// const uri = "mongodb+srv://rohanunbeg0918:iyRcOQzbqERqp9RQ@cluster0.i7hmp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-const dbPassword = 'iyRcOQzbqERqp9RQ'; // Replace this with your actual password
-const dbName = 'cybersec'; // Optional: replace with your database name if needed
+const mongoURI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/cybersec";
 
-mongoose.set('debug', true);
-
-mongoose.connect('mongodb+srv://rohanunbeg0918:iyRcOQzbqERqp9RQ@cluster0.i7hmp.mongodb.net/cybersec?retryWrites=true&w=majority&tls=true')
+  mongoose.connect(mongoURI)
   .then(() => {
-    console.log('Successfully connected to the cloud MongoDB');
+    // Check if the connection is to a cloud MongoDB or local MongoDB
+    if (process.env.MONGODB_URI) {
+      console.log("Successfully connected to the cloud MongoDB");
+    } else {
+      console.log("Successfully connected to the local MongoDB");
+    }
   })
   .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
+    console.error("Error connecting to MongoDB:", error);
   });
-
-
-
 const joinSchema = new mongoose.Schema({
   name: String,
   email: String,
   year: Number,
-  message: String
+  message: String,
 });
 
-const Join = mongoose.model('Join', joinSchema);
+const Join = mongoose.model("Join", joinSchema);
 
-router.post('/join', async (req, res) => {
-  console.log('Received join request:', req.body);
+router.post("/join", async (req, res) => {
+  console.log("Received join request:", req.body);
   try {
     const { name, email, year, message } = req.body;
-    
+
     if (!name || !email || !year) {
-      return res.status(400).json({ message: 'Name, email, and year are required fields.' });
+      return res
+        .status(400)
+        .json({ message: "Name, email, and year are required fields." });
     }
 
     const newJoin = new Join({ name, email, year: parseInt(year), message });
-    console.log('Attempting to save:', newJoin);
-    
+    console.log("Attempting to save:", newJoin);
+
     await newJoin.save();
-    console.log('Join request saved successfully');
-    res.status(200).json({ message: 'Application submitted successfully!' });
+    console.log("Join request saved successfully");
+    res.status(200).json({ message: "Application submitted successfully!" });
   } catch (error) {
     console.error("Error saving to MongoDB:", error);
-    res.status(500).json({ message: 'Failed to submit application.', error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to submit application.", error: error.message });
   }
 });
-
-
 
 router.get("/", (req, res) => {
   res.render("home");
