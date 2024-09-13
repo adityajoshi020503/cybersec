@@ -1,0 +1,149 @@
+<%- include('partials/header') %>
+
+<style>
+    :root {
+    --primary-color: #4a90e2;
+    --secondary-color: #50e3c2;
+    --dark-color: #2c3e50;
+    --light-color: #ecf0f1;
+  }
+  
+  body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      
+    }
+
+    .navbar {
+    transition: all 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.95);
+    /* Updated to solid color */
+  }
+
+  .navbar-scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    /* Updated to solid color */
+
+  }
+
+
+  .navbar-brand {
+    color: var(--dark-color);
+  }
+
+  .navbar-brand h3 {
+    margin: 0;
+  }
+  .navbar-brand:hover {
+    color: var(--dark-color);
+  }
+
+  .nav-link {
+    color: var(--dark-color);
+  }
+
+  .nav-link:hover {
+    color: var(--primary-color);
+  }
+  #contact {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    overflow: auto;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1a252f;
+    color: white;
+  }
+  .contact-heading{
+    margin-top: 40px;
+  }
+
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light  fixed-top mb-3">
+  <div class="container">
+    <a class="navbar-brand" href="/"><h3><strong>CyberSec</strong></h3></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/resources">Resources</a></li>
+        <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#events">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="/joinus">Join Us</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-5" >
+  <h2 class="text-center mb-5" style="
+  margin-top: 26px;
+">Cybersecurity Resources</h2>
+  <div class="row">
+    <!-- Resource Card 1 -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">OWASP Top 10</h5>
+          <p class="card-text">
+            The OWASP Top 10 is the standard awareness document for developers and web application security. It represents a broad consensus about the most critical security risks to web applications.
+          </p>
+          <a href="https://owasp.org/www-project-top-ten/" target="_blank" class="btn btn-primary">Learn More</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Resource Card 2 -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">NIST Cybersecurity Framework</h5>
+          <p class="card-text">
+            The NIST Framework provides guidance on how private sector organizations can assess and improve their ability to prevent, detect, and respond to cyber attacks.
+          </p>
+          <a href="https://www.nist.gov/cyberframework" target="_blank" class="btn btn-primary">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resource Card 3 -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Cybersecurity & Infrastructure Security Agency (CISA)</h5>
+          <p class="card-text">
+            CISA provides resources, guidelines, and best practices for protecting and securing critical infrastructure from cyber threats.
+          </p>
+          <a href="https://www.cisa.gov/" target="_blank" class="btn btn-primary">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resource Card 4 -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Cybersecurity News - ThreatPost</h5>
+          <p class="card-text">
+            Stay updated with the latest news and articles on cybersecurity threats, vulnerabilities, and best practices from ThreatPost, a leading source for IT and security news.
+          </p>
+          <a href="https://threatpost.com/" target="_blank" class="btn btn-primary">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<%- include('partials/footer') %>

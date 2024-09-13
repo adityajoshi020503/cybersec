@@ -65,9 +65,11 @@ router.get("/blog", (req, res) => {
   // Render the blog page with the posts
   res.render("blog-page");
 });
-router.get("/contact", (req, res) => {
-  // Render the blog page with the posts
-  res.render("contact-page");
+router.get("/resources", (req, res) => {
+  res.render("resources-page");
+});
+router.get("/joinus", (req, res) => {
+  res.render("joinus-page");
 });
 
 router.get("/medium-feed", (req, res) => {

@@ -1,0 +1,164 @@
+<%- include('partials/header') %>
+
+<style>
+  :root {
+    --primary-color: #4a90e2;
+    --secondary-color: #50e3c2;
+    --dark-color: #2c3e50;
+    --light-color: #ecf0f1;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+  }
+
+  .navbar {
+    transition: all 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.95);
+    /* Updated to solid color */
+  }
+
+  .navbar-scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    /* Updated to solid color */
+
+  }
+
+
+  .navbar-brand {
+    color: var(--dark-color);
+  }
+
+  .navbar-brand h3 {
+    margin: 0;
+  }
+
+  .navbar-brand:hover {
+    color: var(--dark-color);
+  }
+
+  .nav-link {
+    color: var(--dark-color);
+  }
+
+  .nav-link:hover {
+    color: var(--primary-color);
+  }
+
+  #contact {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    overflow: auto;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1a252f;
+    color: white;
+  }
+
+  .contact-heading {
+    margin-top: 40px;
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light  fixed-top mb-3">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <h3><strong>CyberSec</strong></h3>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/resources">Resources</a></li>
+        <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#events">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="/joinus">Join Us</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="margin-top: 90px;">
+  <div class="form-section">
+    <div class="form-header">
+      <h5 class="modal-title mb-3">Join Our Association</h5>
+    </div>
+    <div class="form-body">
+      <form id="joinForm">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="joinName" placeholder="Your Name" required>
+        </div>
+        <div class="mb-3">
+          <input type="email" class="form-control" id="joinEmail" placeholder="Your Email" required>
+        </div>
+        <div class="mb-3">
+          <select class="form-select" id="joinYear" required>
+            <option value="">Select Your Year</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <textarea class="form-control" id="joinMessage" rows="3" placeholder="Why do you want to join?"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  //join form submission
+  document.getElementById('joinForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('joinName').value;
+    const email = document.getElementById('joinEmail').value;
+    const year = document.getElementById('joinYear').value;
+    const message = document.getElementById('joinMessage').value;
+
+    try {
+      const response = await fetch('/join', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          year,
+          message
+        })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(result.message);
+        $('#joinModal').modal('hide');
+        document.getElementById('joinForm').reset();
+      } else {
+        throw new Error(result.message || 'Failed to submit application.');
+      }
+    } catch (error) {
+      alert(`Failed to submit application: ${error.message}`);
+      console.error('Error:', error);
+    }
+  });
+</script>
+
+
+<%- include('partials/footer') %>
