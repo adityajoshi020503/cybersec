@@ -1,0 +1,176 @@
+<%- include('partials/header') %>
+
+<style>
+  :root {
+    --primary-color: #4a90e2;
+    --secondary-color: #50e3c2;
+    --dark-color: #2c3e50;
+    --light-color: #ecf0f1;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+
+
+  #blogPage {
+    padding: 60px 0;
+  }
+
+  .blog-posts {
+    border-right: 1px solid #ddd;
+  }
+
+  .categories {
+    padding-left: 30px;
+  }
+
+  .category-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .category-list button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    text-align: left;
+    transition: color 0.3s ease;
+  }
+
+  .category-list button:hover {
+    color: var(--secondary-color);
+  }
+
+  .card {
+    border: none;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .active-category {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  #loading,
+  #error-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+  }
+
+  .no-posts-message {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #666;
+  }
+
+  .footer {
+    margin-top: 7rem;
+    background-color: #1a252f;
+    color: var(--light-color);
+  }
+
+  .sponsor-logo {
+    max-width: 150px;
+    height: auto;
+    filter: grayscale(100%);
+    transition: filter 0.3s;
+  }
+
+  .sponsor-logo:hover {
+    filter: grayscale(0%);
+  }
+
+  .navbar {
+    transition: all 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  .navbar-scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  .navbar-brand {
+    color: var(--dark-color);
+  }
+
+  .navbar-brand h3 {
+    margin: 0;
+  }
+  .navbar-brand:hover {
+    color: var(--dark-color);
+  }
+
+  .nav-link {
+    color: var(--dark-color);
+  }
+
+  .nav-link:hover {
+    color: var(--primary-color);
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <h3><strong>CyberSec</strong></h3>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/resources">Resources</a></li>
+        <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#events">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="/joinus">Join Us</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- Blog Submission Section -->
+<section id="submit-article" class="py-5 light-section" >
+  <div class="container">
+    <h2 class="section-title text-center mb-5" style="margin-top: 30px;">Submit Your Article</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form id="submission-form" action="/submit-article" method="POST">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

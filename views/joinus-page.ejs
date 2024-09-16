@@ -1,32 +1,80 @@
 <%- include('partials/header') %>
+<%- include('partials/navbar') %>
 
 <style>
-  :root {
+    :root {
     --primary-color: #4a90e2;
     --secondary-color: #50e3c2;
     --dark-color: #2c3e50;
     --light-color: #ecf0f1;
   }
-
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-
+.navbar{
+  /* border: 1px solid red; */
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  background-color: white;
+}
+body{
+  color: #2c3e50;
+}
+  .dark-section {
+    background-color: #f0f0f0;
+    /* Light gray background */
+    color: #333;
+    /* Dark text for contrast */
   }
 
-  .navbar {
-    transition: all 0.3s;
+  .form-section {
+    background-color: #ffffff;
+    border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background-color: rgba(255, 255, 255, 0.95);
-    /* Updated to solid color */
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
   }
 
-  .navbar-scrolled {
-    background-color: rgba(255, 255, 255, 0.95);
-    /* Updated to solid color */
-
+  .form-header h3 {
+    margin-bottom: 20px;
+    color: var(--dark-color);
   }
+
+  form input,
+  form select,
+  form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+  form input:focus,
+  form select:focus,
+  form textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+
+  form button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  form button:hover {
+    background-color: #357abd;
+  }
+
+  .modal-content {
+    border-radius: 8px;
+  }
+
 
 
   .navbar-brand {
@@ -38,7 +86,7 @@
   }
 
   .navbar-brand:hover {
-    color: var(--dark-color);
+    color: var(--primary-color);
   }
 
   .nav-link {
@@ -48,29 +96,11 @@
   .nav-link:hover {
     color: var(--primary-color);
   }
-
-  #contact {
-    background-color: var(--dark-color);
-    color: var(--light-color);
-    overflow: auto;
-  }
-
-  .footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #1a252f;
-    color: white;
-  }
-
-  .contact-heading {
-    margin-top: 40px;
-  }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-light  fixed-top mb-3">
-  <div class="container">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light  fixed-top">
+  <div class="container ">
     <a class="navbar-brand" href="/">
       <h3><strong>CyberSec</strong></h3>
     </a>
@@ -81,7 +111,7 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="/resources">Resources</a></li>
-        <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="/#blog-section">Blog</a></li>
         <li class="nav-item"><a class="nav-link" href="/#events">Events</a></li>
         <li class="nav-item"><a class="nav-link" href="/joinus">Join Us</a></li>
       </ul>
@@ -89,46 +119,63 @@
   </div>
 </nav>
 
-<div class="container" style="margin-top: 90px;">
+<div class="container " style="margin-top: 90px;">
   <div class="form-section">
     <div class="form-header">
-      <h5 class="modal-title mb-3">Join Our Association</h5>
+      <h3 class="modal-title mb-3">Join Our Association</h3>
     </div>
     <div class="form-body">
       <form id="joinForm">
-        <div class="mb-3">
-          <input type="text" class="form-control" id="joinName" placeholder="Your Name" required>
-        </div>
-        <div class="mb-3">
-          <input type="email" class="form-control" id="joinEmail" placeholder="Your Email" required>
-        </div>
-        <div class="mb-3">
-          <select class="form-select" id="joinYear" required>
-            <option value="">Select Your Year</option>
-            <option value="1">1st Year</option>
-            <option value="2">2nd Year</option>
-            <option value="3">3rd Year</option>
-            <option value="4">4th Year</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <textarea class="form-control" id="joinMessage" rows="3" placeholder="Why do you want to join?"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit Application</button>
+        <input type="text" name="name" id="joinName" placeholder="Your Name" required>
+        <input type="email" name="email" id="joinEmail" placeholder="Your Email" required>
+        <input type="tel" name="phone" id="joinPhone" placeholder="Your Phone No. (preferably WhatsApp)" required>
+        <select name="department" id="joinDepartment" required>
+          <option value="">Select Your Department</option>
+          <option value="Computer">Computer Engineering</option>
+          <option value="IT">IT Engineering</option>
+          <option value="Electronics">Electronics and Telecommunication Engineering</option>
+          <option value="Electrical">Electrical Engineering</option>
+          <option value="Mechanical">Mechanical Engineering</option>
+          <option value="Mechanical">Civil Engineering</option>
+        </select>
+        <select name="year" id="joinYear" required>
+          <option value="">Select Your Year</option>
+          <option value="1">1st Year</option>
+          <option value="2">2nd Year</option>
+          <option value="3">3rd Year</option>
+          <option value="4">4th Year</option>
+        </select>
+        <textarea name="message" id="joinMessage" rows="3" placeholder="Why do you want to join?"></textarea>
+        <button type="submit">Submit Application</button>
       </form>
     </div>
   </div>
 </div>
 
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Success</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="successMessage">Your application has been submitted successfully!</p>
+        <p>Join our WhatsApp group for more updates: <a href="https://chat.whatsapp.com/KRkgM7VmuxNHAC7nT4VZvS" target="_blank">Join Group</a></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-  //join form submission
   document.getElementById('joinForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const name = document.getElementById('joinName').value;
-    const email = document.getElementById('joinEmail').value;
-    const year = document.getElementById('joinYear').value;
-    const message = document.getElementById('joinMessage').value;
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
 
     try {
       const response = await fetch('/join', {
@@ -136,29 +183,22 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          name,
-          email,
-          year,
-          message
-        })
+        body: JSON.stringify(data)
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        alert(result.message);
-        $('#joinModal').modal('hide');
+        document.getElementById('successMessage').innerText = result.message;
+        new bootstrap.Modal(document.getElementById('successModal')).show();
         document.getElementById('joinForm').reset();
       } else {
         throw new Error(result.message || 'Failed to submit application.');
       }
     } catch (error) {
-      alert(`Failed to submit application: ${error.message}`);
       console.error('Error:', error);
     }
   });
 </script>
-
 
 <%- include('partials/footer') %>

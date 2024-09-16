@@ -1,5 +1,5 @@
 <%- include('partials/header') %>
-
+<%- include('partials/navbar') %>
 <style>
   :root {
     --primary-color: #4a90e2;
@@ -124,210 +124,85 @@
   .nav-link:hover {
     color: var(--primary-color);
   }
+
+  .blog-page {
+    padding: 60px 20px;
+    background-color: #f8f9fa; /* Light background color for the blog page */
+  }
+  .blog-post {
+    background-color: #ffffff; /* White background for the post */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  .blog-post h2 {
+    margin-top: 0;
+  }
+  .blog-post .summary {
+    font-size: 1.1rem;
+    color: #555555;
+  }
+  .blog-post .date {
+    font-size: 0.9rem;
+    color: #777777;
+  }
+  .blog-post .content {
+    margin-top: 20px;
+  }
+  .blog-post ul {
+    padding-left: 20px;
+  }
+  .blog-post a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .blog-post a:hover {
+    text-decoration: underline;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+
+
+  
+
+<div class="blog-page ">
   <div class="container">
-    <a class="navbar-brand" href="/">
-      <h3><strong>CyberSec</strong></h3>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/resources">Resources</a></li>
-        <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
-        <li class="nav-item"><a class="nav-link" href="/#events">Events</a></li>
-        <li class="nav-item"><a class="nav-link" href="/joinus">Join Us</a></li>
-      </ul>
+    <div class="blog-post mt-5">
+      <h2>TCOER CSC Blog</h2>
+      <h3>Cybersecurity Essentials for Beginners</h3>
+      <p class="date">Posted on: 13 September 2024 | By: Aditya Joshi</p>
+      <!-- <p class="summary">
+        Cybersecurity is becoming more important than ever in our digital world. Learn the basics to protect yourself from cyber threats and enhance your digital security. 
+        <a href="#read-more">Read more...</a>
+      </p> -->
+      <div class="content" id="read-more">
+        <h4>Introduction:</h4>
+        <p>In today’s increasingly digital world, cybersecurity is a fundamental skill everyone should be aware of. Whether you’re protecting personal data or ensuring the safety of your company’s systems, knowing the basics of cybersecurity is crucial in defending against cyberattacks.</p>
+
+        <h4>Why is Cybersecurity Important?</h4>
+        <p>Cybersecurity refers to the practice of protecting systems, networks, and data from digital attacks. With most aspects of our lives connected online, from banking to communication, safeguarding this information is critical. Cybersecurity helps protect sensitive data from unauthorized access, cyberattacks, and disruptions.</p>
+
+        <h4>Basic Cybersecurity Practices for Beginners</h4>
+        <ul>
+          <li>Use Strong Passwords: Always use a mix of letters, numbers, and symbols in your passwords to ensure they are hard to guess.</li>
+          <li>Enable Two-Factor Authentication: This adds an additional layer of security to your online accounts, requiring two forms of verification.</li>
+          <li>Keep Software Updated: Regular updates protect your devices from known vulnerabilities.</li>
+          <li>Be Aware of Phishing Scams: Be cautious of suspicious emails and websites that try to trick you into revealing sensitive information.</li>
+        </ul>
+
+        <h4>Conclusion:</h4>
+        <p>As digital threats continue to evolve, staying informed and practicing good cybersecurity hygiene is key to protecting yourself and your data. Whether you're just starting or looking to expand your knowledge, the basics of cybersecurity are the foundation for a secure digital presence.</p>
+      </div>
     </div>
   </div>
-</nav>
+</div>
 
 
-<main>
-
-  <section id="blogPage" class="container content" style="flex: 1;">
-    <div class="row">
-      <!-- Blog Posts Section -->
-      <div class="col-lg-8 blog-posts">
-        <h2 class="section-title">Latest Blog Posts</h2>
-        <div id="loading">Loading blog posts...</div>
-        <div id="error-message" style="display: none;"></div>
-        <div id="medium-feed"></div>
-        <div id="pagination" class="d-flex justify-content-between">
-          <button id="prevBtn" class="btn btn-primary" disabled>Previous</button>
-          <button id="nextBtn" class="btn btn-primary">Next</button>
-        </div>
-      </div>
-
-      <!-- Categories Section -->
-      <div class="col-lg-4 categories">
-        <h2 class="section-title">Categories</h2>
-        <ul class="category-list" id="category-list">
-          <li><button data-category="All" class="active-category">All</button></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-</main>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const mediumFeed = document.getElementById("medium-feed");
-    const categoryList = document.getElementById("category-list");
-    const loadingElement = document.getElementById("loading");
-    const errorElement = document.getElementById("error-message");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const spinnerOverlay = document.getElementById("spinner"); // Get the spinner overlay
-    let allPosts = [];
-    let filteredPosts = [];
-    let currentPage = 1;
-    const postsPerPage = 5; // Number of posts to show per page
-
-    // Show/hide loading spinner
-    function showLoading(show) {
-      loadingElement.style.display = show ? "block" : "none";
-    }
-
-    // Show error message
-    function showError(message) {
-      errorElement.textContent = message;
-      errorElement.style.display = "block";
-    }
-
-    // Hide error message
-    function hideError() {
-      errorElement.style.display = "none";
-    }
-
-    // Fetch data from multiple Medium feeds
-    function fetchMediumFeeds() {
-      showLoading(true);
-      hideError();
-
-      const feeds = [
-        "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@Cyb3rsecurity",
-        "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@cyber-security",
-        "https://api.rss2json.com/v1/api.json?rss_url=https://sparshjazz.medium.com/",
-        "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/@infosecwriteups"
-      ];
-
-      Promise.all(feeds.map(feed => fetch(feed).then(response => response.json())))
-        .then(results => {
-          let posts = [];
-
-          results.forEach(data => {
-            if (!data.items || data.items.length === 0) return;
-
-            posts = posts.concat(data.items.map(post => ({
-              title: post.title,
-              link: post.link,
-              pubDate: new Date(post.pubDate).toLocaleDateString(),
-              category: post.categories.length > 0 ? post.categories[0] : "Uncategorized",
-              truncatedDescription: post.description.replace(/<[^>]+>/g, '').substring(0, 100) + "..."
-            })));
-          });
-
-          if (posts.length === 0) {
-            mediumFeed.innerHTML = "<p class='no-posts-message'>No blog posts available.</p>";
-            return;
-          }
-
-          allPosts = posts;
-          filteredPosts = [...allPosts];
-          populateCategories();
-          renderBlogPosts(filteredPosts, currentPage);
-        })
-        .catch(error => {
-          console.error("Error fetching Medium feeds:", error);
-          showError("Failed to load blog posts. Please try again later.");
-        })
-        .finally(() => {
-          showLoading(false);
-        });
-    }
-
-    // Populate categories dynamically
-    function populateCategories() {
-      const uniqueCategories = [...new Set(allPosts.map(post => post.category))];
-      uniqueCategories.forEach(category => {
-        const li = document.createElement('li');
-        li.innerHTML = `<button data-category="${category}">${category}</button>`;
-        categoryList.appendChild(li);
-      });
-    }
-
-    // Render blog posts with pagination
-    function renderBlogPosts(posts, page) {
-      const startIndex = (page - 1) * postsPerPage;
-      const endIndex = page * postsPerPage;
-      const postsToRender = posts.slice(startIndex, endIndex);
-
-      if (postsToRender.length === 0) {
-        mediumFeed.innerHTML = "<p class='no-posts-message'>No blog posts available.</p>";
-        return;
-      }
-
-      mediumFeed.innerHTML = postsToRender.map(post => `
-        <div class="card h-100 mb-4">
-          <div class="card-body">
-            <h5 class="card-title">${post.title}</h5>
-            <p class="card-text">
-              <small class="text-muted">${post.pubDate} - ${post.category}</small>
-            </p>
-            <p>${post.truncatedDescription}</p>
-            <a href="${post.link}" class="btn btn-primary" target="_blank">Read More</a>
-          </div>
-        </div>
-      `).join('');
-
-      updatePaginationButtons(posts);
-    }
-
-    // Update the state of the pagination buttons
-    function updatePaginationButtons(posts) {
-      prevBtn.disabled = currentPage === 1;
-      nextBtn.disabled = currentPage * postsPerPage >= posts.length;
-    }
-
-    // Handle pagination button clicks
-    prevBtn.addEventListener('click', function() {
-      if (currentPage > 1) {
-        currentPage--;
-        renderBlogPosts(filteredPosts, currentPage);
-      }
-    });
-
-    nextBtn.addEventListener('click', function() {
-      if (currentPage * postsPerPage < filteredPosts.length) {
-        currentPage++;
-        renderBlogPosts(filteredPosts, currentPage);
-      }
-    });
-
-    // Handle category click events
-    categoryList.addEventListener('click', (event) => {
-      if (event.target.tagName === 'BUTTON') {
-        const category = event.target.getAttribute('data-category');
-
-        // Update active category styling
-        document.querySelectorAll('.category-list button').forEach(btn => btn.classList.remove('active-category'));
-        event.target.classList.add('active-category');
-
-        // Filter posts by category
-        filteredPosts = category === 'All' ? allPosts : allPosts.filter(post => post.category === category);
-        currentPage = 1; // Reset to first page when category changes
-        renderBlogPosts(filteredPosts, currentPage);
-      }
-    });
-
-    // Fetch the Medium feeds
-    fetchMediumFeeds();
-  });
-</script>
 
 <%- include('partials/footer') %>

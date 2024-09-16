@@ -1,19 +1,13 @@
-// routes/pageRoutes.js
 const express = require("express");
 const router = express.Router();
-const nodemailer = require("nodemailer");
-const request = require("request");
-const xml2js = require("xml2js");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const mongoURI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/cybersec";
+const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/cybersec";
 
 mongoose
   .connect(mongoURI)
   .then(() => {
-    // Check if the connection is to a cloud MongoDB or local MongoDB
     if (process.env.MONGODB_URI) {
       console.log("Successfully connected to the cloud MongoDB");
     } else {
@@ -23,164 +17,138 @@ mongoose
   .catch((error) => {
     console.error("Error connecting to MongoDB:", error);
   });
-const joinSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  year: Number,
-  message: String,
-});
 
-const Join = mongoose.model("Join", joinSchema);
-
-router.post("/join", async (req, res) => {
-  console.log("Received join request:", req.body);
-  try {
-    const { name, email, year, message } = req.body;
-
-    if (!name || !email || !year) {
-      return res
-        .status(400)
-        .json({ message: "Name, email, and year are required fields." });
+  const joinSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    department: { type: String, required: true },
+    year: { type: Number, required: true },
+    message: { type: String }
+  });
+  
+  const Join = mongoose.model("Join", joinSchema);
+  
+  router.post('/join', async (req, res) => {
+    console.log('Received join request:', req.body);
+  
+    try {
+      const {
+        name,
+        email,
+        phone,
+        department,
+        year,
+        message
+      } = req.body;
+  
+      // Validate required fields
+      if (!name || !email || !phone || !department || !year) {
+        console.log('Validation failed: Missing required fields');
+        return res
+          .status(400)
+          .json({ message: 'Name, email, phone, department, and year are required fields.' });
+      }
+  
+      // Ensure year is a number
+      const yearNumber = parseInt(year, 10);
+      console.log('Parsed year:', yearNumber);
+  
+      if (isNaN(yearNumber)) {
+        console.log('Validation failed: Invalid year provided');
+        return res.status(400).json({ message: 'Invalid year provided.' });
+      }
+  
+      // Create a new Join instance with the data
+      const newJoin = new Join({
+        name,
+        email,
+        phone,
+        department,
+        year: yearNumber,
+        message
+      });
+  
+      console.log('Attempting to save:', newJoin);
+  
+      // Save the join request to MongoDB
+      await newJoin.save();
+      console.log('Join request saved successfully');
+      res.status(200).json({ message: 'Application submitted successfully!' });
+  
+    } catch (error) {
+      console.error('Error saving to MongoDB:', error);
+      res.status(500).json({ message: 'Failed to submit application.', error: error.message });
     }
-
-    const newJoin = new Join({ name, email, year: parseInt(year), message });
-    console.log("Attempting to save:", newJoin);
-
-    await newJoin.save();
-    console.log("Join request saved successfully");
-    res.status(200).json({ message: "Application submitted successfully!" });
-  } catch (error) {
-    console.error("Error saving to MongoDB:", error);
-    res
-      .status(500)
-      .json({ message: "Failed to submit application.", error: error.message });
-  }
-});
+  });
 
 router.get("/", (req, res) => {
   res.render("home");
 });
 
 router.get("/blog", (req, res) => {
-  // Render the blog page with the posts
   res.render("blog-page");
 });
+
 router.get("/resources", (req, res) => {
   res.render("resources-page");
 });
+
 router.get("/joinus", (req, res) => {
   res.render("joinus-page");
 });
 
-router.get("/medium-feed", (req, res) => {
-  const mediumFeedUrl = "https://medium.com/feed/@Cyb3rsecurity";
-
-  // Fetch the Medium RSS feed
-  request(mediumFeedUrl, (error, response, body) => {
-    if (!error && response.statusCode == 200) {
-      const parser = new xml2js.Parser();
-
-      // Parse the RSS feed
-      parser.parseString(body, (err, result) => {
-        if (err) {
-          return res.status(500).send("Error parsing RSS feed");
-        }
-
-        // Check if the expected structure is present
-        const posts = result?.rss?.channel?.[0]?.item;
-        if (!posts || posts.length === 0) {
-          return res.status(500).send("No blog posts found");
-        }
-
-        // Map over the blog posts and render them
-        const blogPosts = posts.map((post) => {
-          const title = post.title?.[0] || "No title available";
-          const link = post.link?.[0] || "#";
-          const pubDate = post.pubDate?.[0] || "No date available";
-          return { title, link, pubDate };
-        });
-
-        // Send blog posts to the template or response
-        res.json({ blogPosts });
-      });
-    } else {
-      res.status(500).send("Error fetching Medium RSS feed");
-    }
-  });
+router.get("/artical", (req, res) => {
+  res.render("artical-page"); 
 });
 
-router.post("/submit-join-form", async (req, res) => {
-  console.log("Request Body:", req.body);
-  const { name, email, message } = req.body;
+const articleSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  date: Date
+});
+
+const Article = mongoose.model('Article', articleSchema);
+
+router.post('/submit-article', async (req, res) => {
+  const { title, description, date } = req.body;
+
+  const newArticle = new Article({
+    title,
+    description,
+    date
+  });
 
   try {
-    if (!fs.existsSync(dataFolderPath)) {
-      fs.mkdirSync(dataFolderPath, { recursive: true });
-      console.log("Data folder created.");
-    }
-
-    let workbook;
-    let sheet;
-    if (fs.existsSync(filePath)) {
-      // Load existing workbook
-      workbook = XLSX.readFile(filePath);
-      console.log("Existing file loaded.");
-      sheet =
-        workbook.Sheets["Join Requests"] ||
-        XLSX.utils.json_to_sheet([], { header: ["Name", "Email", "Message"] });
-    } else {
-      // Create new workbook and sheet
-      console.log("No file found, creating a new one.");
-      sheet = XLSX.utils.json_to_sheet([], {
-        header: ["Name", "Email", "Message"],
-      });
-      workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, sheet, "Join Requests");
-    }
-
-    // Add new row to the sheet
-    const newRow = { Name: name, Email: email, Message: message };
-    XLSX.utils.sheet_add_json(sheet, [newRow], {
-      header: ["Name", "Email", "Message"],
-      skipHeader: true,
-      origin: -1,
-    });
-
-    // Save the workbook to file
-    XLSX.writeFile(workbook, filePath);
-    console.log("File saved successfully.");
-
-    res.send("Form data saved to Excel sheet.");
-  } catch (error) {
-    console.error("Error saving to Excel:", error);
-    res.status(500).send("Failed to save data.");
+    await newArticle.save();
+    res.redirect('/blog');
+  } catch (err) {
+    console.error('Error saving article:', err);
+    res.status(500).send('Error saving article.');
   }
 });
 
 router.post("/send-email", (req, res) => {
   const { name, email, message } = req.body;
 
-  // Configure the transporter for nodemailer
   const transporter = nodemailer.createTransport({
-    service: "gmail", // or use another email service
+    service: "gmail",
     auth: {
-      user: "rohanunbeg0918@gmail.com", // replace with your email
-      pass: "wcbp fqdo prxm jwmm", // replace with your email password or app-specific password
+      user: "rohanunbeg0918@gmail.com",
+      pass: "wcbp fqdo prxm jwmm",
     },
   });
 
-  // Email options
   const mailOptions = {
-    from: email, // sender address
-    to: "rohanunbegfreelance@gmail.com", // receiver address
-    subject: `Message from ${name}`, // Subject line
+    from: email,
+    to: "rohanunbegfreelance@gmail.com",
+    subject: `Message from ${name}`,
     text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
   };
 
-  // Send the email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log(error);
+      console.error('Error sending email:', error);
       res.status(500).send("Error sending email");
     } else {
       console.log("Email sent: " + info.response);
