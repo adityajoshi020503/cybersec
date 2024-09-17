@@ -1,20 +1,166 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light  fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        <h3><strong>CyberSec</strong></h3>
+<style>
+  
+  .custom-navbar {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background-color: transparent;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.logo {
+    text-decoration: none;
+    color: white;
+}
+
+.logo h3 {
+    margin: 0;
+    color: white;
+}
+
+.toggle-button {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+.navbar-menu {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar-links li {
+    margin-left: 20px;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect */
+.navbar-links a:hover {
+    color: #4a90e2;
+}
+
+/* Adjust hover color when navbar is scrolled */
+.custom-navbar.scrolled .navbar-links a:hover {
+    color: #4a90e2;
+}
+
+.custom-navbar.scrolled {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-navbar.scrolled .logo h3,
+.custom-navbar.scrolled .navbar-links a,
+.custom-navbar.scrolled .toggle-button {
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .toggle-button {
+        display: block;
+    }
+    .navbar-menu {
+        display: none;
+        width: 100%;
+        background-color: white;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        flex-direction: column;
+        align-items: center;
+    }
+    .navbar-menu.active {
+        display: flex;
+    }
+    .navbar-links {
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar-links li {
+        margin: 10px 0;
+    }
+    .navbar-links a {
+        color: #000;
+    }
+}
+
+</style>
+</head>
+<body>
+<nav class="custom-navbar">
+  <div class="navbar-container">
+      <a class="logo" href="/">
+          <h3><strong>TCOER CSC</strong></h3>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/resources">Resources</a></li>
-          <li class="nav-item"><a class="nav-link" href="/#blog-section">Blog</a></li>
-          <li class="nav-item"><a class="nav-link" href="/#events">Events</a></li>
-          <li class="nav-item"><a class="nav-link" href="/joinus">Join Us</a></li>
-        </ul>
+      <button class="toggle-button">☰</button>
+      <div class="navbar-menu">
+          <ul class="navbar-links">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#who">About Us</a></li>
+              <li><a href="/#blog-section">Blog</a></li>
+              <li><a href="/resources">Resources</a></li>
+              <li><a href="/joinus">Join Now</a></li>
+              <li><a href="/contact">Contact Us</a></li>
+          </ul>
       </div>
-    </div>
-  </nav>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+      const navbar = document.querySelector('.custom-navbar');
+      const toggleButton = document.querySelector('.toggle-button');
+      const navbarMenu = document.querySelector('.navbar-menu');
+
+      function handleScroll() {
+          if (window.scrollY > 50) {
+              navbar.classList.add('scrolled');
+          } else {
+              navbar.classList.remove('scrolled');
+          }
+      }
+
+      window.addEventListener('scroll', handleScroll);
+
+      toggleButton.addEventListener('click', () => {
+          navbarMenu.classList.toggle('active');
+      });
+
+      // Initial check in case the user loads the page scrolled
+      handleScroll();
+  });
+</script>

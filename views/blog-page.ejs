@@ -1,5 +1,6 @@
 <%- include('partials/header') %>
-<%- include('partials/navbar') %>
+<%- include('partials/navbar2') %>
+
 <style>
   :root {
     --primary-color: #4a90e2;
@@ -12,9 +13,6 @@
     display: flex;
     flex-direction: column;
   }
-
-
-
 
   #blogPage {
     padding: 60px 0;
@@ -96,35 +94,6 @@
     filter: grayscale(0%);
   }
 
-  .navbar {
-    transition: all 0.3s;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background-color: rgba(255, 255, 255, 0.95);
-  }
-
-  .navbar-scrolled {
-    background-color: rgba(255, 255, 255, 0.95);
-  }
-
-  .navbar-brand {
-    color: var(--dark-color);
-  }
-
-  .navbar-brand h3 {
-    margin: 0;
-  }
-  .navbar-brand:hover {
-    color: var(--dark-color);
-  }
-
-  .nav-link {
-    color: var(--dark-color);
-  }
-
-  .nav-link:hover {
-    color: var(--primary-color);
-  }
-
   .blog-page {
     padding: 60px 20px;
     background-color: #f8f9fa; /* Light background color for the blog page */
@@ -165,11 +134,34 @@
     max-width: 800px;
     margin: 0 auto;
   }
+
+  .navbar {
+  background-color: transparent;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.navbar a.nav-link,
+.navbar-brand {
+  color: #1a252f;
+}
+
+.navbar a.nav-link:hover {
+  color: var(--primary-color) !important;
+}
+
+/* When scrolled */
+.navbar-scrolled {
+  background-color: white !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-scrolled a.nav-link,
+.navbar-scrolled .navbar-brand {
+  color: var(--dark-color) !important;
+  /* Change to black on scroll */
+}
 </style>
-
-
-
-  
 
 <div class="blog-page ">
   <div class="container">
